@@ -1,0 +1,25 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap'); */
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+
+/* * {
+    font-family: "Lora", serif;
+} */
+
+:root {
+  --main-gradient: linear-gradient(to bottom, rgb(132,205,238), rgb(220,240,250));
+}
+
+body {
+  background: var(--main-gradient);
+  min-height: 100vh;
+  background-attachment: fixed;
+}
+
+
