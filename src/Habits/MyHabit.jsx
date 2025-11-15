@@ -10,7 +10,7 @@ const MyHabits = ({ refresh }) => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+
   const fetchHabits = async () => {
     setLoading(true);
     try {
@@ -36,7 +36,7 @@ const MyHabits = ({ refresh }) => {
     fetchHabits();
   }, [user, refresh]);
 
-  
+
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -69,7 +69,7 @@ const MyHabits = ({ refresh }) => {
     }
   };
 
- 
+
   const calculateStreak = (completionHistory = []) => {
     if (!completionHistory.length) return 0;
     const completedDates = completionHistory
@@ -119,7 +119,7 @@ const MyHabits = ({ refresh }) => {
           title: "Great!",
           text: "Habit marked as complete for today!",
         });
-        
+
         setHabits((prev) =>
           prev.map((h) =>
             h._id === habit._id
@@ -153,52 +153,58 @@ const MyHabits = ({ refresh }) => {
 
   return (
     <MotionLayout>
-      <div className="px-2 mt-5 overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr>
-              <th className="w-1/4">Title</th>
-              <th className="w-1/4">Category</th>
-              <th className="w-1/6">Current Streak</th>
-              <th className="w-1/6">Created Date</th>
-              <th className="w-auto">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {habits.map((habit) => (
-              <tr key={habit._id}>
-                <td>{habit.name}</td>
-                <td>{habit.category}</td>
-                <td>{calculateStreak(habit.completionHistory)}</td>
-                <td>{new Date(habit.created_at).toLocaleDateString()}</td>
-                <td className="space-x-2 whitespace-nowrap">
-                  <Link
-                    to={`/update-habit/${habit._id}`}
-                    className="btn btn-sm btn-info"
-                  >
-                    Update
-                  </Link>
-                  <button
-                    className="btn btn-sm btn-error"
-                    onClick={() => handleDelete(habit._id)}
-                  >
-                    Delete
-                  </button>
-                  <button
-                    className="btn btn-sm btn-success"
-                    onClick={() => handleMarkComplete(habit)}
-                  >
-                    {habit.completionHistory?.includes(
-                      new Date().toISOString().split("T")[0]
-                    )
-                      ? "Completed"
-                      : "Mark Complete"}
-                  </button>
-                </td>
+      <div className="px-6 mt-5 overflow-x-auto">
+        {habits.length === 0 ? (
+          <div className="text-center text-gray-500 py-20 text-2xl">
+            No habits added yet
+          </div>
+        ) : (
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th className="w-1/4">Title</th>
+                <th className="w-1/4">Category</th>
+                <th className="w-1/6">Current Streak</th>
+                <th className="w-1/6">Created Date</th>
+                <th className="w-auto">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {habits.map((habit) => (
+                <tr key={habit._id}>
+                  <td>{habit.name}</td>
+                  <td>{habit.category}</td>
+                  <td>{calculateStreak(habit.completionHistory)}</td>
+                  <td>{new Date(habit.created_at).toLocaleDateString()}</td>
+                  <td className="space-x-2 whitespace-nowrap">
+                    <Link
+                      to={`/update-habit/${habit._id}`}
+                      className="btn btn-sm btn-info"
+                    >
+                      Update
+                    </Link>
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => handleDelete(habit._id)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => handleMarkComplete(habit)}
+                    >
+                      {habit.completionHistory?.includes(
+                        new Date().toISOString().split("T")[0]
+                      )
+                        ? "Completed"
+                        : "Mark Complete"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </MotionLayout>
   );

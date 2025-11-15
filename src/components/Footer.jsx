@@ -1,16 +1,17 @@
 import React from "react";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { RiTwitterXFill } from "react-icons/ri";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#dcf0fa] text-gray-700 py-10 mt-10">
+    <footer className="bg-[#dcf0fa] text-gray-700 py-10 px-10 mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
 
           <div className="flex flex-col space-y-2">
             <h1 className="text-2xl font-bold text-blue-600">HabitTracker</h1>
-            <p className="text-gray-600">Build better habits, boost productivity.</p>
+            <p className="text-gray-600">Build better habits,<br /> boost productivity.</p>
           </div>
 
 
@@ -32,7 +33,7 @@ const Footer = () => {
             <h2 className="font-semibold">Follow Us</h2>
             <div className="flex space-x-3 mt-1">
               <a href="#" className="text-gray-600 hover:text-blue-600"><FaFacebookF /></a>
-              <a href="#" className="text-gray-600 hover:text-blue-600"><FaTwitter /></a>
+              <a href="#" className="text-gray-600 hover:text-blue-600"><RiTwitterXFill /></a>
               <a href="#" className="text-gray-600 hover:text-pink-500"><FaInstagram /></a>
               <a href="#" className="text-gray-600 hover:text-blue-700"><FaLinkedinIn /></a>
             </div>

@@ -6,7 +6,6 @@ import { IoLogIn, IoLogOut } from "react-icons/io5";
 const NavBar = () => {
   const { user, signOutUser } = useContext(AuthContext);
 
-  
   const navLinks = (
     <>
       <li>
@@ -19,6 +18,7 @@ const NavBar = () => {
           Home
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/add-habit"
@@ -29,6 +29,7 @@ const NavBar = () => {
           Add Habit
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/my-habits"
@@ -39,6 +40,7 @@ const NavBar = () => {
           My Habits
         </NavLink>
       </li>
+
       <li>
         <NavLink
           to="/public-habits"
@@ -53,48 +55,51 @@ const NavBar = () => {
   );
 
   return (
-    <div className="navbar shadow-sm bg-[#b9e2f5] sticky top-0 z-50">
+    <div className="navbar shadow-sm bg-[#b9e2f5] sticky top-0 z-50 px-4 md:px-10">
+      
       <div className="navbar-start">
-        {/* mobile dropdown */}
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+        {/* Mobile menu */}
+        <div className="dropdown lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </div>
+
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 p-3 shadow bg-base-100 rounded-box w-56 space-y-1"
           >
             {navLinks}
           </ul>
         </div>
+
         <Link
           to="/"
-          className="btn btn-ghost normal-case text-xl font-bold text-blue-600"
+          className="flex justify-center items-center gap-3 text-lg md:text-xl font-bold text-blue-600"
         >
-          <img className=" w-[30px] h-[30px]" src="/public/logo1.png" alt="" />
-          <h1>Habit Tracker</h1>
+          <img
+            className="w-[38px] h-[38px] md:w-[40px] md:h-[40px] rounded-full"
+            src="/mainlogo.png"
+            alt=""
+          />
+          <h1 className="hidden md:block">Habit Tracker</h1>
         </Link>
       </div>
 
-      {/* desktop links */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+        <ul className="menu menu-horizontal px-1 gap-2">
+          {navLinks}
+        </ul>
       </div>
 
-      {/* right side */}
       <div className="navbar-end flex gap-3">
         {user ? (
           <div className="dropdown dropdown-end">
@@ -114,18 +119,20 @@ const NavBar = () => {
                 />
               </div>
             </div>
+
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-2 p-3 shadow bg-base-100 rounded-box w-56"
             >
-              <li className="pb-2 border-b">
+              <li className="pb-2">
                 <span className="font-semibold">{user.displayName}</span>
                 <span className="text-xs">{user.email}</span>
               </li>
+
               <li>
                 <button
                   onClick={signOutUser}
-                  className="bg-[#84cdee] text-black"
+                  className="btn btn-error rounded-full"
                 >
                   <IoLogOut /> Logout
                 </button>
@@ -136,13 +143,14 @@ const NavBar = () => {
           <>
             <Link
               to="/login"
-              className="btn btn-sm bg-blue-600 text-white hover:bg-blue-700"
+              className="btn btn-primary border-none rounded-full text-sm md:text-base"
             >
               <IoLogIn /> Login
             </Link>
+
             <Link
               to="/register"
-              className="btn btn-sm border-blue-600 text-blue-600 hover:bg-blue-50"
+              className="btn btn-success border-none rounded-full text-sm md:text-base"
             >
               Sign Up
             </Link>

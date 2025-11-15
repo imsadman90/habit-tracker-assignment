@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
 
 const photos = [
-  "https://media.istockphoto.com/id/1528036967/photo/build-good-habits-symbol-concept-wooden-blocks-with-build-good-habits-motto-navy-blue.jpg?s=612x612&w=0&k=20&c=zD5Nt7cuNF_XwMW7uu-ai2Yv9kZy9HQwfd2ro6MnFaw=",
-  "https://www.shutterstock.com/image-photo/daily-habits-shown-using-text-600nw-2485051015.jpg",
-  "https://thumbs.dreamstime.com/b/good-habits-results-life-concept-chalkboard-writing-hand-149414968.jpg",
-  "https://inkwellpress.com/cdn/shop/articles/BlogHabits.jpg?v=1678483581",
-  "https://cdn.prod.website-files.com/5d3aa41f4e11727a27d4e25c/5f1800507d8026c23bb18476_lDo-q8DZxN7yt1LmqQtuUQTx9g8V11ekawCo5JmOXfQptwHDk6wp4LS2F2MneH0X2HgrtFFLZN2uX8B89euO4Uc44IU-frF25FDkTG9ixB6kfvKjBkjH3VRyqzf5E0EBj6Xzdkms.jpeg"
+  "https://images.unsplash.com/photo-1614813231574-843cb1fb940b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1644412448740-40e5b6ded2dc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1474859569645-e0def92b02bc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1644412447181-7f9f80ee3889?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1636116328724-5a11af8d9677?q=80&w=1179&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 ];
 
 const Banner = () => {
@@ -16,7 +16,7 @@ const Banner = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % photos.length);
-    }, 4000); // slide changes every 4 seconds
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -24,26 +24,28 @@ const Banner = () => {
   const nextSlide = () => setCurrent((current + 1) % photos.length);
 
   return (
-    <div className="w-full relative overflow-hidden mb-15">
-      {/* Slides */}
+    <div className="w-full relative overflow-hidden mb-10">
+
       <div
         className="flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {photos.map((src, i) => (
-          <div key={i} className="w-full flex-shrink-0 relative h-[70vh] md:h-[60vh] lg:h-[80vh]">
-            <img
-              src={src}
-              alt={`slide-${i}`}
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient overlay */}
+          <div
+            key={i}
+            className="w-full flex-shrink-0 relative 
+                       h-[60vh] xs:h-[65vh] sm:h-[70vh] md:h-[65vh] lg:h-[80vh]"
+          >
+            <img src={src} alt={`slide-${i}`} className="w-full h-full object-cover" />
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30" />
-            
-            {/* Typewriter Text at Bottom */}
+
             {current === i && (
-              <div className="absolute left-1/5 bottom-10 -translate-x-1/2 text-center text-white px-4">
-                <h1 className="text-3xl md:text-4xl font-bold">
+              <div
+                className="absolute bottom-6 sm:bottom-10 left-1/2 
+                           -translate-x-1/2 text-center text-white px-2 sm:px-4 w-[90%] sm:w-auto"
+              >
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-snug">
                   <Typewriter
                     words={["Build Good Habits", "Transform Your Life", "Stay Consistent"]}
                     loop={0}
@@ -60,30 +62,33 @@ const Banner = () => {
         ))}
       </div>
 
-      {/* Navigation buttons */}
       <button
         onClick={prevSlide}
-        className="absolute left-5 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 
+                   bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition"
       >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-5 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full transition"
-      >
-        <ChevronRight className="w-6 h-6" />
+        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
       </button>
 
-      {/* Pagination dots */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-3">
+      <button
+        onClick={nextSlide}
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 
+                   bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full transition"
+      >
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+      </button>
+
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3">
         {photos.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`h-2 w-2 rounded-full transition-all ${current === i ? "bg-white w-5" : "bg-white/50"}`}
+            className={`h-2 w-2 rounded-full transition-all 
+                      ${current === i ? "bg-white w-5" : "bg-white/50"}`}
           />
         ))}
       </div>
+
     </div>
   );
 };

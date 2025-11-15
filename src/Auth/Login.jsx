@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Firebase/firebase.config"; // adjust the path according to your project
+import { auth } from "../Firebase/firebase.config";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
@@ -16,7 +16,7 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       toast.success("Login successful!");
-      navigate("/"); // redirect to home after login
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     }
@@ -27,15 +27,15 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       toast.success(`Welcome, ${user.displayName || "User"}!`);
-      navigate("/"); // redirect to home after login
+      navigate("/");
     } catch (error) {
       toast.error(error.message);
     }
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+    <div className="min-h-[80vh] flex items-center justify-center pt-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full  p-8 rounded-lg shadow-md bg-[#dcf0fa] text-gray-700">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Login to Habit Tracker
         </h2>
@@ -71,7 +71,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="w-full py-2 bg-gradient-to-r from-blue-800 to-sky-400 rounded-full text-white transition"
           >
             Login
           </button>
@@ -80,12 +80,12 @@ const Login = () => {
         <div className="mt-6 text-center">
           <button
             onClick={handleGoogleLogin}
-            className="w-full flex justify-center items-center gap-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+            className="w-full flex justify-center items-center gap-2 py-2 bg-gradient-to-r from-red-500 to-sky-400 rounded-full text-white transition"
           >
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/0/09/Google_logo.svg"
+              src="https://w7.pngwing.com/pngs/326/85/png-transparent-google-logo-google-text-trademark-logo.png"
               alt="Google"
-              className="w-5 h-5"
+              className="w-5 h-5 rounded-full"
             />
             Continue with Google
           </button>

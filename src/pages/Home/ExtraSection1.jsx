@@ -24,7 +24,7 @@ const ExtraSection1 = () => {
   return (
     <MotionLayout>
       <section
-        className=" "
+        className=" px-10"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center  p-10 rounded-xl">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">

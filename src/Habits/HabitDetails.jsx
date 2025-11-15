@@ -246,7 +246,6 @@ const HabitDetails = () => {
                Description : {habit.description}
               </p>
 
-              {/* Progress + Streak */}
               <div className="space-y-3">
                 <div>
                   <p className="font-semibold text-gray-800 mb-2">

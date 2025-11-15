@@ -36,7 +36,7 @@ const BrowsePublicHabits = () => {
 
   return (
     <MotionLayout>
-      <div className="max-w-6xl mx-auto p-6 mt-10">
+      <div className="max-w-6xl mx-auto p-6 px-10 mt-10">
         <h1 className="text-4xl font-bold text-center mb-10 text-black/80">
           Browse Public Habits
         </h1>
@@ -64,7 +64,6 @@ const BrowsePublicHabits = () => {
           </select>
         </div>
 
-        {/* Total count */}
         <div className="mb-4 mt-10 text-gray-700 font-medium">
           {filteredHabits.length} habit{filteredHabits.length !== 1 && "s"} found
         </div>

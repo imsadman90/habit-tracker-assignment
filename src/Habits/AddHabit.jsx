@@ -122,7 +122,7 @@ const AddHabit = () => {
               />
             </div>
 
-            {/* User Name */}
+            {/* User Name*/}
             <div>
               <label className="label font-medium mb-2">User Name</label>
               <input
@@ -133,7 +133,6 @@ const AddHabit = () => {
               />
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               className="btn w-full rounded-full  text-white border-none bg-blue-500 transition-colors"
