@@ -18,7 +18,7 @@ const Login = () => {
       toast.success("Login successful!");
       navigate("/");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(`Password did'nt match`);
     }
   };
 

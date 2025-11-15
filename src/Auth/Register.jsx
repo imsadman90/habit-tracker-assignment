@@ -59,7 +59,7 @@ const Register = () => {
       setPassword("");
     } catch (err) {
       console.error("Registration error:", err.message);
-      setError(err.message);
+      setError(`Already have an account`);
     }
   };
 
