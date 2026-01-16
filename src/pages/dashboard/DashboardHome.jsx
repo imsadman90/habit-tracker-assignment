@@ -13,7 +13,11 @@ const DashboardHome = () => {
   useEffect(() => {
     if (!user?.email) return;
 
+<<<<<<< HEAD
     fetch(`VITE_API_URL/my-habits?email=${user.email}`)
+=======
+    fetch(`https://habit-server-kappa.vercel.app/my-habits?email=${user.email}`)
+>>>>>>> 2055b98 (polished the project)
       .then((res) => res.json())
       .then((data) => {
         setHabits(data);

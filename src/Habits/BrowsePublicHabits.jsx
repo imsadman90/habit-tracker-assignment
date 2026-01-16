@@ -33,7 +33,6 @@ const BrowsePublicHabits = () => {
       </div>
     );
 
-
   return (
     <MotionLayout>
       <div className="max-w-6xl mx-auto p-6 mt-10">
@@ -65,7 +64,8 @@ const BrowsePublicHabits = () => {
         </div>
 
         <div className="mb-4 mt-10 text-gray-700 font-medium">
-          {filteredHabits.length} habit{filteredHabits.length !== 1 && "s"} found
+          {filteredHabits.length} habit{filteredHabits.length !== 1 && "s"}{" "}
+          found
         </div>
 
         {filteredHabits.length > 0 ? (
@@ -75,7 +75,9 @@ const BrowsePublicHabits = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center text-gray-500 text-lg">No habits found.</div>
+          <div className="text-center text-gray-500 text-lg">
+            No habits found.
+          </div>
         )}
       </div>
     </MotionLayout>

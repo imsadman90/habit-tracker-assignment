@@ -59,7 +59,7 @@ const Register = () => {
       setPassword("");
     } catch (err) {
       console.error("Registration error:", err.message);
-      setError(`Already have an account`);
+      setError("Already have an account");
     }
   };
 
@@ -76,103 +76,120 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center pt-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-[#dcf0fa] text-gray-700 p-8 rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Create an Account
-        </h2>
-
-        <form onSubmit={handleRegister} className="space-y-5">
-          {/* Name */}
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
-            />
-          </div>
-
-          {/* Photo URL */}
-          <div>
-            <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 mb-1">
-              Photo URL
-            </label>
-            <input
-              type="text"
-              id="photoURL"
-              value={photoURL}
-              onChange={(e) => setPhotoURL(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
-            />
-          </div>
-
-          {/* Password */}
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 6 characters, uppercase & lowercase"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
-            />
-          </div>
-
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-          <button
-            type="submit"
-            className="w-full py-2 bg-gradient-to-r from-blue-800 to-sky-400 rounded-full text-white transition"
-          >
-            Sign Up
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <button
-            onClick={handleGoogleRegister}
-            className="w-full flex justify-center items-center gap-2 py-2 bg-gradient-to-r from-red-500 to-sky-400 rounded-full text-white transition"
-          >
-            <img
-              src="https://w7.pngwing.com/pngs/326/85/png-transparent-google-logo-google-text-trademark-logo.png"
-              alt="Google"
-              className="w-5 h-5 rounded-full"
-            />
-            Continue with Google
-          </button>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl flex overflow-hidden">
+        {/* Left Image/Illustration */}
+        <div className="hidden md:flex w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 items-center justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80"
+            alt="Login Illustration"
+            className="object-cover h-full w-full"
+          />
         </div>
 
-        <p className="mt-6 text-center text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </p>
+        {/* Form Section */}
+        <div className="w-full md:w-1/2 p-10 md:p-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+            Create Account
+          </h2>
+          <p className="text-center text-gray-600 mb-8">
+            Build habits, track progress, and transform your life.
+          </p>
+
+          <form onSubmit={handleRegister} className="space-y-5">
+            {/* Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email
+              </label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+              />
+            </div>
+
+            {/* Photo URL */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Photo URL (optional)
+              </label>
+              <input
+                type="text"
+                value={photoURL}
+                onChange={(e) => setPhotoURL(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters, uppercase & lowercase"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+              />
+            </div>
+
+            {error && (
+              <p className="text-red-500 text-sm text-center">{error}</p>
+            )}
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform"
+            >
+              Sign Up
+            </button>
+          </form>
+
+          {/* Google Sign-In */}
+          <div className="mt-6 text-center">
+            <button
+              onClick={handleGoogleRegister}
+              className="w-full flex justify-center items-center gap-2 py-3 bg-gradient-to-r from-red-500 to-pink-400 rounded-full text-white shadow-lg hover:scale-105 transition-transform"
+            >
+              <img
+                src="https://w7.pngwing.com/pngs/326/85/png-transparent-google-logo-google-text-trademark-logo.png"
+                alt="Google"
+                className="w-5 h-5 rounded-full"
+              />
+              Continue with Google
+            </button>
+          </div>
+
+          <p className="mt-6 text-center text-gray-600">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Login
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+/* index.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
-
 @plugin "daisyui" {
   themes: light --default, dark --prefersdark;
 }
-
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 
 * {
   font-family: "Noto Sans", sans-serif;
@@ -15,13 +13,31 @@
 }
 
 :root {
-  --main-gradient: linear-gradient(to bottom, rgb(132, 205, 238), rgb(220, 240, 250));
+  background-color: white/50;
 }
 
-body {
-  background: var(--main-gradient);
-  min-height: 100vh;
-  background-attachment: fixed;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* Enhanced skeleton pulse animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Gradient text effect (optional) */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

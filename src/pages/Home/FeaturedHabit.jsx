@@ -30,7 +30,9 @@ const FeaturedHabit = () => {
     <MotionLayout>
       <div className="">
         <Banner />
-        <div className="text-center text-3xl font-bold mt-5 mb-10 text-black/80">Latest Habits</div>
+        <div className="text-center text-3xl font-bold mt-5 mb-10">
+          Latest <span className="text-blue-500">Habits</span>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 px-10 lg:grid-cols-3 gap-6 mt-10">
           {latestHabits.map((habit) => (
