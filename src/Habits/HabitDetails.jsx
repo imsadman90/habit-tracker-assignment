@@ -27,7 +27,7 @@ const HabitDetails = () => {
   const fetchHabit = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5001/habits/${id}`);
+      const res = await fetch(`VITE_API_URL/habits/${id}`);
       const data = await res.json();
 
       setHabit(data.result);
@@ -51,17 +51,16 @@ const HabitDetails = () => {
     fetchHabit();
   }, [id]);
 
-
   const updateProgressAndStreak = (completionHistory = []) => {
-    const historyDates = completionHistory.map(d => new Date(d));
+    const historyDates = completionHistory.map((d) => new Date(d));
     const today = new Date();
 
     const last30 = historyDates.filter(
-      d => (today - d) / (1000 * 60 * 60 * 24) <= 30
+      (d) => (today - d) / (1000 * 60 * 60 * 24) <= 30
     );
 
     const completedSet = new Set(
-      last30.map(d => d.toISOString().split("T")[0])
+      last30.map((d) => d.toISOString().split("T")[0])
     );
 
     setProgress(((completedSet.size / 30) * 100).toFixed(1));
@@ -96,17 +95,14 @@ const HabitDetails = () => {
     try {
       const token = await user.getIdToken(true);
 
-      const res = await fetch(
-        `http://localhost:5001/habits/${habit._id}/complete`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ date: todayStr }),
-        }
-      );
+      const res = await fetch(`VITE_API_URL/habits/${habit._id}/complete`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ date: todayStr }),
+      });
 
       const data = await res.json();
 
@@ -118,7 +114,7 @@ const HabitDetails = () => {
         });
 
         const updated = [...(habit.completionHistory || []), todayStr];
-        setHabit(prev => ({ ...prev, completionHistory: updated }));
+        setHabit((prev) => ({ ...prev, completionHistory: updated }));
         updateProgressAndStreak(updated);
       } else {
         Swal.fire({
@@ -153,7 +149,7 @@ const HabitDetails = () => {
     if (confirm.isConfirmed) {
       try {
         const token = await user.getIdToken(true);
-        const res = await fetch(`http://localhost:5001/habits/${habit._id}`, {
+        const res = await fetch(`VITE_API_URL/habits/${habit._id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -199,7 +195,6 @@ const HabitDetails = () => {
             border: "1px solid rgba(255,255,255,0.4)",
           }}
         >
-         
           <div className="absolute -top-10 -left-10 w-40 rounded-full bg-pink-300 opacity-20 blur-3xl"></div>
           <div className="absolute -bottom-10 -right-10 w-40  rounded-full bg-blue-300 opacity-20 blur-3xl"></div>
 
@@ -212,14 +207,11 @@ const HabitDetails = () => {
               />
             </div>
 
-           
             <div className="flex flex-col justify-between w-full md:w-1/2 space-y-5">
-              
               <h1 className="text-3xl md:text-4xl font-semibold text-gray-800">
                 {habit.name}
               </h1>
 
-             
               <div className="flex gap-3 flex-wrap">
                 <div className="px-4 py-1.5 bg-blue-500/80 text-white rounded-full font-medium shadow">
                   {habit.category}
@@ -242,9 +234,7 @@ const HabitDetails = () => {
                 )}
               </div>
 
-              <p className="text-gray-700">
-               Description : {habit.description}
-              </p>
+              <p className="text-gray-700">Description : {habit.description}</p>
 
               <div className="space-y-3">
                 <div>
@@ -262,7 +252,9 @@ const HabitDetails = () => {
                 </div>
 
                 <div className="flex  items-center gap-2">
-                  <p className="font-semibold text-gray-800">Current Streak :</p>
+                  <p className="font-semibold text-gray-800">
+                    Current Streak :
+                  </p>
                   <div className="font-semibold">
                     {streak} day{streak !== 1 && "s"}
                   </div>
@@ -305,7 +297,6 @@ const HabitDetails = () => {
       </div>
     </MotionLayout>
   );
-
 };
 
 export default HabitDetails;

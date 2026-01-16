@@ -20,7 +20,7 @@ const AddHabit = () => {
       user_name: user.displayName || "",
     };
 
-    fetch("http://localhost:5001/habits", {
+    fetch("VITE_API_URL/habits", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
@@ -28,18 +28,14 @@ const AddHabit = () => {
       .then((res) => res.json())
       .then(() => {
         toast.success("Successfully added!");
-        e.target.reset(); 
+        e.target.reset();
       })
       .catch((err) => console.log(err));
   };
 
-
   return (
     <MotionLayout>
-      <div
-        className="card  max-w-xl mx-auto rounded-2xl shadow-2xl bg-[#dcf0fa] text-gray-700  mt-10 overflow-hidden"
-
-      >
+      <div className="card  max-w-xl mx-auto rounded-2xl shadow-2xl bg-[#dcf0fa] text-gray-700  mt-10 overflow-hidden">
         <div className="card-body p-6">
           <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
             Add New Habit

@@ -10,12 +10,11 @@ const MyHabits = ({ refresh }) => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   const fetchHabits = async () => {
     setLoading(true);
     try {
       const token = await user.getIdToken(true);
-      const res = await fetch(`http://localhost:5001/my-habits?email=${user.email}`, {
+      const res = await fetch(`VITE_API_URL/my-habits?email=${user.email}`, {
         headers: { authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -36,7 +35,6 @@ const MyHabits = ({ refresh }) => {
     fetchHabits();
   }, [user, refresh]);
 
-
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -49,7 +47,7 @@ const MyHabits = ({ refresh }) => {
     if (result.isConfirmed) {
       try {
         const token = await user.getIdToken(true);
-        const res = await fetch(`http://localhost:5001/habits/${id}`, {
+        const res = await fetch(`VITE_API_URL/habits/${id}`, {
           method: "DELETE",
           headers: { authorization: `Bearer ${token}` },
         });
@@ -69,7 +67,6 @@ const MyHabits = ({ refresh }) => {
     }
   };
 
-
   const calculateStreak = (completionHistory = []) => {
     if (!completionHistory.length) return 0;
     const completedDates = completionHistory
@@ -88,7 +85,6 @@ const MyHabits = ({ refresh }) => {
     return streak;
   };
 
-
   const handleMarkComplete = async (habit) => {
     const todayStr = new Date().toISOString().split("T")[0];
 
@@ -103,7 +99,7 @@ const MyHabits = ({ refresh }) => {
 
     try {
       const token = await user.getIdToken(true);
-      const res = await fetch(`http://localhost:5001/habits/${habit._id}/complete`, {
+      const res = await fetch(`VITE_API_URL/habits/${habit._id}/complete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +119,10 @@ const MyHabits = ({ refresh }) => {
         setHabits((prev) =>
           prev.map((h) =>
             h._id === habit._id
-              ? { ...h, completionHistory: [...(h.completionHistory || []), todayStr] }
+              ? {
+                  ...h,
+                  completionHistory: [...(h.completionHistory || []), todayStr],
+                }
               : h
           )
         );

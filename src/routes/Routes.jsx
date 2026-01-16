@@ -11,7 +11,6 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
 import FeaturedHabit from "../pages/Home/FeaturedHabit";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -19,81 +18,57 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          
-            <FeaturedHabit />
-         
-        ),
+        element: <FeaturedHabit />,
         loader: async () => {
           try {
-            const res = await fetch("http://localhost:5001/habits");
-            if (!res.ok) throw new Error("Failed to fetch habits");
+            const res = await fetch("VITE_API_URL/latest-habits");
+            if (!res.ok) throw new Error("Failed to fetch latest habits");
             const data = await res.json();
             return Array.isArray(data) ? data : [];
           } catch (err) {
-            console.error("Error fetching habits:", err);
+            console.error("Error fetching latest habits:", err);
             return [];
           }
         },
       },
 
-      { path: "/login", element: 
-        
-          <Login />
-       
-      },
-
-      { path: "/register", element: 
-        
-          <Register />
-       
-      },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
 
       {
         path: "/add-habit",
         element: (
-          
-            <ProtectedRoute>
-              <AddHabit />
-            </ProtectedRoute>
-         
+          <ProtectedRoute>
+            <AddHabit />
+          </ProtectedRoute>
         ),
       },
 
       {
         path: "/my-habits",
         element: (
-          
-            <ProtectedRoute>
-              <MyHabits />
-            </ProtectedRoute>
-         
+          <ProtectedRoute>
+            <MyHabits />
+          </ProtectedRoute>
         ),
       },
 
       {
         path: "/update-habit/:id",
         element: (
-          
-            <ProtectedRoute>
-              <UpdateHabit />
-            </ProtectedRoute>
-         
+          <ProtectedRoute>
+            <UpdateHabit />
+          </ProtectedRoute>
         ),
-        loader: ({ params }) =>
-          fetch(`http://localhost:5001/habits/${params.id}`)
+        loader: ({ params }) => fetch(`VITE_API_URL/habits/${params.id}`),
       },
 
       {
         path: "/public-habits",
-        element: (
-          
-            <BrowsePublicHabits />
-         
-        ),
+        element: <BrowsePublicHabits />,
         loader: async () => {
           try {
-            const res = await fetch("http://localhost:5001/habits");
+            const res = await fetch("VITE_API_URL/habits");
             if (!res.ok) throw new Error("Failed to fetch public habits");
             const data = await res.json();
             return Array.isArray(data) ? data : [];
@@ -107,25 +82,17 @@ const router = createBrowserRouter([
       {
         path: "/habit-details/:id",
         element: (
-          
-            <ProtectedRoute>
-              <HabitDetails />
-            </ProtectedRoute>
-         
+          <ProtectedRoute>
+            <HabitDetails />
+          </ProtectedRoute>
         ),
       },
-
-  
     ],
   },
 
   {
     path: "*",
-    element: (
-      
-        <NotFound />
-     
-    ),
+    element: <NotFound />,
   },
 ]);
 
