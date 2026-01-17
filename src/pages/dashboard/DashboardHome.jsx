@@ -26,10 +26,8 @@ const DashboardHome = () => {
       });
   }, [user]);
 
-  // Chart data (last 7 days)
   const generateChartData = (habits) => {
     const daysMap = {};
-
     habits.forEach((habit) => {
       habit.completionHistory?.forEach((date) => {
         daysMap[date] = (daysMap[date] || 0) + 1;
@@ -40,7 +38,6 @@ const DashboardHome = () => {
       const d = new Date();
       d.setDate(d.getDate() - (6 - i));
       const key = d.toISOString().split("T")[0];
-
       return {
         name: d.toLocaleDateString("en-US", { weekday: "short" }),
         completed: daysMap[key] || 0,
@@ -50,9 +47,7 @@ const DashboardHome = () => {
     setChartData(last7Days);
   };
 
-  // Overview calculations
   const today = new Date().toISOString().split("T")[0];
-
   const completedToday = habits.filter((h) =>
     h.completionHistory?.includes(today)
   ).length;
@@ -61,45 +56,49 @@ const DashboardHome = () => {
     {
       title: "Total Habits",
       value: habits.length,
-      icon: <FaList className="w-6 h-6 text-white" />,
+      icon: <FaList className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       bg: "from-blue-500 to-blue-700",
     },
     {
       title: "Completed Today",
       value: completedToday,
-      icon: <FaCheckCircle className="w-6 h-6 text-white" />,
+      icon: <FaCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       bg: "from-green-500 to-green-700",
     },
     {
       title: "Active Days",
       value: chartData.reduce((a, b) => a + b.completed, 0),
-      icon: <FaFire className="w-6 h-6 text-white" />,
+      icon: <FaFire className="w-5 h-5 sm:w-6 sm:h-6 text-white" />,
       bg: "from-orange-500 to-red-600",
     },
   ];
 
   if (loading) {
-    return <p className="text-center">Loading dashboard...</p>;
+    return (
+      <p className="text-center mt-10 text-gray-500 dark:text-gray-400">
+        Loading dashboard...
+      </p>
+    );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-6 lg:px-8 py-6">
       {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="p-5 rounded-xl bg-white dark:bg-slate-800 shadow"
+            className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-800 shadow hover:shadow-lg transition-shadow"
           >
             <div
-              className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center bg-gradient-to-br ${stat.bg}`}
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full mb-2 sm:mb-3 flex items-center justify-center bg-gradient-to-br ${stat.bg}`}
             >
               {stat.icon}
             </div>
-            <h4 className="text-sm text-gray-500 dark:text-gray-400">
+            <h4 className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
               {stat.title}
             </h4>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">
               {stat.value}
             </p>
           </div>
@@ -107,9 +106,16 @@ const DashboardHome = () => {
       </div>
 
       {/* Chart */}
-      <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow">
+      <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-2xl shadow">
         <DashboardCharts data={chartData} />
       </div>
+
+      {/* Mobile friendly note */}
+      {habits.length === 0 && (
+        <div className="text-center text-gray-500 dark:text-gray-400 mt-6 text-sm sm:text-base">
+          No habits yet. Start building your streak today!
+        </div>
+      )}
     </div>
   );
 };

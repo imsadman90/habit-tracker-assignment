@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 import { FiLinkedin } from "react-icons/fi";
 
@@ -21,39 +21,39 @@ const ContactPage = () => {
       {/* Contact Section */}
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
         {/* Contact Form */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 md:p-12 border border-white/50">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 md:p-12 border border-white/50 dark:bg-base-100 dark:border-none">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-gray-400">
             Send a Message
           </h2>
           <form className="space-y-4">
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-gray-700 font-semibold mb-1 dark:text-gray-400">
                 Name
               </label>
               <input
                 type="text"
                 placeholder="Your Name"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-700"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-300 dark:text-gray-400"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-gray-700 font-semibold mb-1 dark:text-gray-400">
                 Email
               </label>
               <input
                 type="email"
                 placeholder="you@example.com"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-700"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-300"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-semibold mb-1">
+              <label className="block text-gray-700 font-semibold mb-1 dark:text-gray-400">
                 Message
               </label>
               <textarea
                 rows={5}
                 placeholder="Your message..."
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-700"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-gray-600 dark:text-gray-300"
               ></textarea>
             </div>
             <button
@@ -67,15 +67,15 @@ const ContactPage = () => {
 
         {/* Contact Info */}
         <div className="space-y-8">
-          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 dark:bg-base-100 dark:border-none">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-purple-300">
               Contact Info
             </h2>
             <div className="flex items-center gap-4 mb-4">
               <Mail className="w-6 h-6 text-blue-600" />
               <a
                 href="mailto:info@example.com"
-                className="text-gray-700 font-medium hover:text-blue-600"
+                className="text-gray-700 font-medium hover:text-blue-600 dark:text-blue-200"
               >
                 info@example.com
               </a>
@@ -84,22 +84,22 @@ const ContactPage = () => {
               <Phone className="w-6 h-6 text-green-600" />
               <a
                 href="tel:+1234567890"
-                className="text-gray-700 font-medium hover:text-green-600"
+                className="text-gray-700 font-medium hover:text-green-600 dark:text-green-200"
               >
                 +1 234 567 890
               </a>
             </div>
             <div className="flex items-center gap-4">
               <MapPin className="w-6 h-6 text-red-600" />
-              <p className="text-gray-700 font-medium">
+              <p className="text-gray-700 font-medium dark:text-gray-300">
                 123 Habit St, Productivity City, USA
               </p>
             </div>
           </div>
 
           {/* Social Links */}
-          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Follow Us</h2>
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/50 dark:bg-base-100 dark:border-none">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-gray-400">Follow Us</h2>
             <div className="flex items-center gap-6">
               <a href="#" className="text-gray-700 hover:text-gray-900">
                 <FaGithub className="w-6 h-6" />

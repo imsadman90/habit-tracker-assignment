@@ -5,12 +5,7 @@ const navConfig = [
     section: "main",
     title: "Main Menu",
     items: [
-      {
-        id: "overview",
-        label: "Overview",
-        icon: "📊",
-        path: "/dashboard",
-      },
+      { id: "overview", label: "Overview", icon: "📊", path: "/dashboard" },
       {
         id: "add-habit",
         label: "Add Habit",
@@ -51,9 +46,11 @@ const NavIcon = ({ icon, active }) => (
   </div>
 );
 
-const Sidebar = () => {
+// ✅ Added onClose prop
+const Sidebar = ({ onClose }) => {
   return (
-    <aside className="w-72 flex flex-col bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 border-r border-slate-200 dark:border-slate-800 shadow-xl">
+    <aside className="h-screen w-72 flex flex-col bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 border-r border-slate-200 dark:border-slate-800 shadow-xl overflow-y-auto">
+      {/* Logo */}
       <div className="h-20 flex items-center justify-center border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 backdrop-blur-sm">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
@@ -65,6 +62,7 @@ const Sidebar = () => {
         </div>
       </div>
 
+      {/* Navigation */}
       <nav className="flex-1 px-4 py-8 space-y-8 overflow-y-auto">
         {navConfig.map((section) => (
           <div key={section.section}>
@@ -77,6 +75,7 @@ const Sidebar = () => {
                 key={item.id}
                 to={item.path}
                 end={item.id === "overview"}
+                onClick={onClose} // ✅ Close sidebar on click
               >
                 {({ isActive }) => (
                   <div
@@ -96,9 +95,11 @@ const Sidebar = () => {
         ))}
       </nav>
 
+      {/* Footer */}
       <div className="p-4 space-y-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50">
         <NavLink
           to="/"
+          onClick={onClose} // ✅ Close sidebar on click
           className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-800 hover:to-slate-900 text-white rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium"
         >
           <span className="text-lg">🏠</span>
