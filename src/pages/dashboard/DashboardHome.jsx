@@ -13,20 +13,20 @@ const DashboardHome = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-<<<<<<< HEAD
-    fetch(`VITE_API_URL/my-habits?email=${user.email}`)
-=======
-    fetch(`https://habit-server-kappa.vercel.app/my-habits?email=${user.email}`)
->>>>>>> 2055b98 (polished the project)
+    fetch(`${import.meta.env.VITE_API_URL}/my-habits?email=${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         setHabits(data);
         generateChartData(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.error("API error:", err);
+        setLoading(false);
       });
   }, [user]);
 
-  // ✅ Chart data (last 7 days)
+  // Chart data (last 7 days)
   const generateChartData = (habits) => {
     const daysMap = {};
 
@@ -50,7 +50,7 @@ const DashboardHome = () => {
     setChartData(last7Days);
   };
 
-  // ✅ Overview calculations
+  // Overview calculations
   const today = new Date().toISOString().split("T")[0];
 
   const completedToday = habits.filter((h) =>

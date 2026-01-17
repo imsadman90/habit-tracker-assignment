@@ -18,22 +18,17 @@ const MyHabits = ({ refresh }) => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const fetchHabits = async () => {
     if (!user) return;
     setLoading(true);
     try {
       const token = await user.getIdToken(true);
-<<<<<<< HEAD
-      const res = await fetch(`VITE_API_URL/my-habits?email=${user.email}`, {
+      const res = await fetch(`${API_URL}/my-habits?email=${user.email}`, {
         headers: { authorization: `Bearer ${token}` },
       });
-=======
-      const res = await fetch(
-        `https://habit-server-kappa.vercel.app/my-habits?email=${user.email}`,
-        { headers: { authorization: `Bearer ${token}` } }
-      );
       if (!res.ok) throw new Error("Failed to fetch habits");
->>>>>>> 2055b98 (polished the project)
       const data = await res.json();
       setHabits(data || []);
     } catch (err) {
@@ -48,48 +43,9 @@ const MyHabits = ({ refresh }) => {
     fetchHabits();
   }, [user, refresh]);
 
-<<<<<<< HEAD
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const token = await user.getIdToken(true);
-        const res = await fetch(`VITE_API_URL/habits/${id}`, {
-          method: "DELETE",
-          headers: { authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (data.success) {
-          setHabits(habits.filter((habit) => habit._id !== id));
-          toast.success("Habit deleted!");
-        }
-      } catch (err) {
-        console.error(err);
-        Swal.fire({
-          icon: "error",
-          title: "Oops!",
-          text: "Failed to delete habit.",
-        });
-      }
-    }
-  };
-
-  const calculateStreak = (completionHistory = []) => {
-    if (!completionHistory.length) return 0;
-    const completedDates = completionHistory
-=======
   const calculateCurrentStreak = (completionHistory = []) => {
     if (!completionHistory?.length) return 0;
-
     const sortedDates = [...completionHistory]
->>>>>>> 2055b98 (polished the project)
       .map((d) => new Date(d).toISOString().split("T")[0])
       .sort((a, b) => new Date(b) - new Date(a));
 
@@ -114,14 +70,11 @@ const MyHabits = ({ refresh }) => {
     return streak;
   };
 
-<<<<<<< HEAD
-=======
   const isCompletedToday = (history = []) => {
     const today = new Date().toISOString().split("T")[0];
     return history.includes(today);
   };
 
->>>>>>> 2055b98 (polished the project)
   const handleMarkComplete = async (habit) => {
     if (isCompletedToday(habit.completionHistory)) {
       toast("Already completed today! 🎉", { icon: "✨", duration: 3000 });
@@ -130,8 +83,9 @@ const MyHabits = ({ refresh }) => {
 
     try {
       const token = await user.getIdToken(true);
-<<<<<<< HEAD
-      const res = await fetch(`VITE_API_URL/habits/${habit._id}/complete`, {
+      const todayStr = new Date().toISOString().split("T")[0];
+
+      const res = await fetch(`${API_URL}/habits/${habit._id}/complete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,42 +93,7 @@ const MyHabits = ({ refresh }) => {
         },
         body: JSON.stringify({ date: todayStr }),
       });
-      const data = await res.json();
-=======
-      const todayStr = new Date().toISOString().split("T")[0];
->>>>>>> 2055b98 (polished the project)
 
-      const res = await fetch(
-        `https://habit-server-kappa.vercel.app/habits/${habit._id}/complete`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ date: todayStr }),
-        }
-      );
-
-<<<<<<< HEAD
-        setHabits((prev) =>
-          prev.map((h) =>
-            h._id === habit._id
-              ? {
-                  ...h,
-                  completionHistory: [...(h.completionHistory || []), todayStr],
-                }
-              : h
-          )
-        );
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops!",
-          text: data.message || "Something went wrong.",
-        });
-      }
-=======
       if (!res.ok) throw new Error("Failed to mark complete");
 
       setHabits((prev) =>
@@ -189,7 +108,6 @@ const MyHabits = ({ refresh }) => {
       );
 
       toast.success("Great job! Keep it up! 🔥", { position: "top-center" });
->>>>>>> 2055b98 (polished the project)
     } catch (err) {
       console.error(err);
       toast.error("Couldn't mark as complete");
@@ -210,13 +128,10 @@ const MyHabits = ({ refresh }) => {
     if (result.isConfirmed) {
       try {
         const token = await user.getIdToken(true);
-        const res = await fetch(
-          `https://habit-server-kappa.vercel.app/habits/${id}`,
-          {
-            method: "DELETE",
-            headers: { authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await fetch(`${API_URL}/habits/${id}`, {
+          method: "DELETE",
+          headers: { authorization: `Bearer ${token}` },
+        });
         const data = await res.json();
         if (data.success) {
           setHabits(habits.filter((habit) => habit._id !== id));
@@ -247,7 +162,6 @@ const MyHabits = ({ refresh }) => {
   return (
     <MotionLayout>
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
@@ -285,7 +199,6 @@ const MyHabits = ({ refresh }) => {
         ) : (
           <div className="overflow-x-auto rounded-xl border border-base-300 bg-base-100 shadow-xl">
             <table className="table table-lg w-full">
-              {/* Head */}
               <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900">
                 <tr className="text-base font-semibold text-indigo-800 dark:text-indigo-300">
                   <th className="w-5/12">Habit</th>
@@ -295,7 +208,6 @@ const MyHabits = ({ refresh }) => {
                   <th className="w-3/12 text-right pr-6">Actions</th>
                 </tr>
               </thead>
-
               <tbody>
                 {habits.map((habit) => {
                   const streak = calculateCurrentStreak(
@@ -310,7 +222,6 @@ const MyHabits = ({ refresh }) => {
                       key={habit._id}
                       className="hover:bg-base-200/60 transition-colors border-b border-base-200 last:border-b-0"
                     >
-                      {/* Habit Name & Description */}
                       <td className="font-medium">
                         <div className="flex flex-col gap-1">
                           <div className="text-lg font-semibold">
@@ -323,15 +234,11 @@ const MyHabits = ({ refresh }) => {
                           )}
                         </div>
                       </td>
-
-                      {/* Category */}
                       <td className="text-center">
                         <div className="badge badge-outline badge-secondary badge-lg">
                           {habit.category}
                         </div>
                       </td>
-
-                      {/* Streak */}
                       <td className="text-center">
                         <div
                           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-sm ${
@@ -348,16 +255,12 @@ const MyHabits = ({ refresh }) => {
                           {streak}
                         </div>
                       </td>
-
-                      {/* Created Date */}
                       <td className="text-center text-slate-600 dark:text-slate-400">
                         <div className="flex items-center justify-center gap-2">
                           <FaCalendarAlt className="text-indigo-500" />
                           {new Date(habit.created_at).toLocaleDateString()}
                         </div>
                       </td>
-
-                      {/* Actions */}
                       <td className="text-right pr-6">
                         <div className="flex items-center justify-end gap-2">
                           {completedToday ? (
@@ -372,14 +275,12 @@ const MyHabits = ({ refresh }) => {
                               <FaCheckCircle /> Complete
                             </button>
                           )}
-
                           <Link
                             to={`/dashboard/update-habit/${habit._id}`}
                             className="btn btn-sm btn-outline btn-info gap-1.5"
                           >
                             <FaEdit /> Edit
                           </Link>
-
                           <button
                             onClick={() => handleDelete(habit._id)}
                             className="btn btn-sm btn-outline btn-error gap-1.5"

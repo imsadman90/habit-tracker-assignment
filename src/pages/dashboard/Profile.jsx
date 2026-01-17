@@ -17,7 +17,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
-  // 🔹 Initialize form from Firebase user
   useEffect(() => {
     if (user) {
       setFormData({
@@ -27,7 +26,6 @@ const Profile = () => {
     }
   }, [user]);
 
-  // 🔹 Detect changes
   useEffect(() => {
     if (!user) return;
 

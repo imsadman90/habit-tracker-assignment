@@ -32,131 +32,14 @@ const AddHabit = () => {
       created_at: new Date().toISOString(),
     };
 
-<<<<<<< HEAD
-    fetch("VITE_API_URL/habits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        toast.success("Successfully added!");
-        e.target.reset();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  return (
-    <MotionLayout>
-      <div className="card  max-w-xl mx-auto rounded-2xl shadow-2xl bg-[#dcf0fa] text-gray-700  mt-10 overflow-hidden">
-        <div className="card-body p-6">
-          <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">
-            Add New Habit
-          </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name */}
-            <div>
-              <label className="label font-medium mb-2">Name</label>
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Enter name"
-                className="input w-full rounded-full focus:ring-2 focus:ring-[#84cdee] focus:outline-none"
-              />
-            </div>
-
-            {/* Category */}
-            <div>
-              <label className="label font-medium mb-2">Category</label>
-              <select
-                defaultValue=""
-                name="category"
-                required
-                className="select w-full rounded-full focus:ring-2 focus:ring-[#84cdee] focus:outline-none"
-              >
-                <option value="" disabled>
-                  Select category
-                </option>
-                <option value="Morning">Morning</option>
-                <option value="Work">Work</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Evening">Evening</option>
-                <option value="Study">Study</option>
-              </select>
-            </div>
-
-            {/* Description */}
-            <div>
-              <label className="label font-medium mb-2">Description</label>
-              <textarea
-                name="description"
-                required
-                rows="4"
-                placeholder="Enter description"
-                className="textarea w-full rounded-2xl focus:ring-2 focus:ring-[#84cdee] focus:outline-none"
-              ></textarea>
-            </div>
-
-            {/* Reminder Time */}
-            <div>
-              <label className="label font-medium mb-2">Reminder Time</label>
-              <input
-                type="time"
-                name="reminder"
-                required
-                className="input w-full rounded-full focus:ring-2 focus:ring-[#84cdee] focus:outline-none"
-              />
-            </div>
-
-            {/* Image URL */}
-            <div>
-              <label className="label font-medium mb-2">Image URL</label>
-              <input
-                type="url"
-                name="image"
-                placeholder="https://example.com/image.jpg"
-                className="input w-full rounded-full focus:ring-2 focus:ring-[#84cdee] focus:outline-none"
-              />
-            </div>
-
-            {/* User Email */}
-            <div>
-              <label className="label font-medium mb-2">User Email</label>
-              <input
-                type="email"
-                value={user.email}
-                readOnly
-                className="input w-full rounded-full bg-gray-100 cursor-not-allowed"
-              />
-            </div>
-
-            {/* User Name*/}
-            <div>
-              <label className="label font-medium mb-2">User Name</label>
-              <input
-                type="text"
-                value={user.displayName || ""}
-                readOnly
-                className="input w-full rounded-full bg-gray-100 cursor-not-allowed"
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="btn w-full rounded-full  text-white border-none bg-blue-500 transition-colors"
-=======
     try {
-      const response = await fetch(
-        "https://habit-server-kappa.vercel.app/habits",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/habits`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) throw new Error("Failed to add habit");
 
@@ -166,7 +49,7 @@ const AddHabit = () => {
       });
 
       form.reset();
-      form.category.value = ""; // reset select manually
+      form.category.value = "";
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong. Please try again.");
@@ -190,7 +73,6 @@ const AddHabit = () => {
             <div
               className="px-6 pt-8 pb-4 md:px-10 md:pt-10 md:pb-6 bg-gradient-to-r from-blue-50 to-indigo-50 
                           dark:from-slate-800/80 dark:to-indigo-950/30 border-b border-slate-200/70 dark:border-slate-700/60"
->>>>>>> 2055b98 (polished the project)
             >
               <div className="flex items-center justify-center gap-3 mb-2">
                 <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl text-white shadow-lg">
