@@ -60,43 +60,57 @@ const AddHabit = () => {
 
   return (
     <MotionLayout>
-      <div className="flex items-center justify-center px-4">
-        <div className="w-full max-w-3xl">
+      <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="flex flex-col gap-3 mb-6 text-center">
+            <p className="text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-500">
+              New Habit
+            </p>
+            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+              Add a habit you want to grow
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base">
+              Keep it specific, set a reminder, and make it part of your daily
+              rhythm.
+            </p>
+          </div>
+
           {/* Card */}
-          <div
-            className="bg-white dark:bg-gradient-to-b dark:from-slate-800 dark:to-slate-900 
-                        rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl overflow-hidden 
-                        border border-slate-200/60 dark:border-slate-700/60
-                        backdrop-blur-sm transform transition-all duration-300"
-          >
+          <div className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-xl border border-slate-200/70 dark:border-slate-800/70 overflow-hidden">
             {/* Header */}
-            <div
-              className="px-6 pt-8 pb-4 md:px-10 md:pt-10 md:pb-6 bg-gradient-to-r from-blue-50 to-indigo-50 
-                          dark:from-slate-800/80 dark:to-indigo-950/30 border-b border-slate-200/70 dark:border-slate-700/60"
-            >
-              <div className="flex items-center justify-center gap-3 mb-2">
-                <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl text-white shadow-lg">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between px-6 md:px-10 py-6 border-b border-slate-200/70 dark:border-slate-800/70 bg-gradient-to-r from-blue-50/80 via-white to-indigo-50/60 dark:from-slate-900/60 dark:via-slate-900/40 dark:to-indigo-950/30">
+              <div className="flex items-center gap-3">
+                <div className="bg-gradient-to-br from-blue-500 via-blue-500 to-indigo-600 p-3 rounded-2xl text-white shadow-lg shadow-blue-500/30">
                   <FaPlus size={22} />
                 </div>
-                <h2
-                  className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 
-                              dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent"
-                >
-                  Create New Habit
-                </h2>
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    Create new habit
+                  </h2>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    Capture the essentials to stay consistent.
+                  </p>
+                </div>
               </div>
-              <p className="text-center text-slate-600 dark:text-slate-400 text-sm md:text-base">
-                Start building a better you, one habit at a time
-              </p>
+              <div className="flex flex-wrap gap-2 text-xs text-slate-600 dark:text-slate-400">
+                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-700 px-3 py-1 bg-white/70 dark:bg-slate-900/70 backdrop-blur">
+                  <FaClock className="text-amber-500" />
+                  Quick setup
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 dark:border-blue-900/50 px-3 py-1 bg-blue-50/70 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200">
+                  <FaUser className="text-blue-500" />
+                  {user?.email || "Signed in"}
+                </span>
+              </div>
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-6">
+            <form onSubmit={handleSubmit} className="p-6 md:p-10 space-y-7">
               {/* Name + Category */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* Name */}
-                <div className="space-y-1.5">
-                  <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     <FaStickyNote className="text-blue-500" />
                     Habit Name
                   </label>
@@ -105,17 +119,14 @@ const AddHabit = () => {
                     name="name"
                     required
                     maxLength={60}
-                    placeholder="e.g. Morning Meditation"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                             bg-white dark:bg-slate-800/60 focus:ring-2 focus:ring-blue-500/40 
-                             focus:border-blue-500 outline-none transition-all duration-200
-                             placeholder:text-slate-400 dark:placeholder:text-slate-600"
+                    placeholder="e.g. Morning meditation"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-600"
                   />
                 </div>
 
                 {/* Category */}
-                <div className="space-y-1.5">
-                  <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     <FaTag className="text-indigo-500" />
                     Category
                   </label>
@@ -123,9 +134,7 @@ const AddHabit = () => {
                     name="category"
                     required
                     defaultValue=""
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                             bg-white dark:bg-slate-800/60 focus:ring-2 focus:ring-blue-500/40 
-                             focus:border-blue-500 outline-none transition-all duration-200 text-slate-700 dark:text-slate-300"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 outline-none transition-all duration-200 text-slate-700 dark:text-slate-200"
                   >
                     <option value="" disabled>
                       Select category
@@ -143,10 +152,10 @@ const AddHabit = () => {
               </div>
 
               {/* Description */}
-              <div className="space-y-1.5">
-                <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              <div className="space-y-2">
+                <label className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                   <FaStickyNote className="text-purple-500" />
-                  Description{" "}
+                  Description
                   <span className="text-xs text-slate-500">
                     (optional but recommended)
                   </span>
@@ -155,17 +164,14 @@ const AddHabit = () => {
                   name="description"
                   rows={4}
                   placeholder="What will this habit help you achieve? Why is it important to you?"
-                  className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                           bg-white dark:bg-slate-800/60 focus:ring-2 focus:ring-blue-500/40 
-                           focus:border-blue-500 outline-none transition-all duration-200 resize-y
-                           placeholder:text-slate-400 dark:placeholder:text-slate-600"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 outline-none transition-all duration-200 resize-y placeholder:text-slate-400 dark:placeholder:text-slate-600"
                 />
               </div>
 
               {/* Reminder + Image */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="space-y-1.5">
-                  <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     <FaClock className="text-amber-500" />
                     Daily Reminder
                   </label>
@@ -173,14 +179,12 @@ const AddHabit = () => {
                     type="time"
                     name="reminder"
                     required
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                             bg-white dark:bg-slate-800/60 focus:ring-2 focus:ring-blue-500/40 
-                             focus:border-blue-500 outline-none transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 outline-none transition-all duration-200"
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     <FaImage className="text-cyan-500" />
                     Icon / Image URL
                   </label>
@@ -188,23 +192,20 @@ const AddHabit = () => {
                     type="url"
                     name="image"
                     placeholder="https://example.com/habit-icon.jpg"
-                    className="w-full px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-600 
-                             bg-white dark:bg-slate-800/60 focus:ring-2 focus:ring-blue-500/40 
-                             focus:border-blue-500 outline-none transition-all duration-200
-                             placeholder:text-slate-400 dark:placeholder:text-slate-600"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-600"
                   />
                 </div>
               </div>
 
               {/* Submit */}
-              <div className="pt-4">
+              <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className={`
                     w-full py-3.5 px-6 rounded-xl font-semibold text-white text-lg
-                    bg-gradient-to-r from-blue-600 to-indigo-600 
-                    hover:from-blue-700 hover:to-indigo-700
+                    bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600
+                    hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700
                     focus:ring-4 focus:ring-blue-500/30
                     shadow-lg hover:shadow-xl
                     transform hover:-translate-y-0.5 transition-all duration-300

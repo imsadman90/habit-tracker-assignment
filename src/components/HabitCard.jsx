@@ -4,29 +4,29 @@ import { User, Tag, Calendar, TrendingUp } from "lucide-react";
 // Skeleton Loader Component
 export const HabitCardSkeleton = () => {
   return (
-    <div className="bg-white rounded-2xl shadow-md overflow-hidden animate-pulse h-[420px]">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg overflow-hidden animate-pulse h-[460px] border border-gray-100 dark:border-slate-700">
       {/* Image Skeleton */}
-      <div className="h-48 bg-gray-300"></div>
+      <div className="h-52 bg-gradient-to-r from-gray-300 to-gray-200 dark:from-slate-700 dark:to-slate-600"></div>
 
       {/* Content Skeleton */}
-      <div className="p-5 space-y-3">
+      <div className="p-6 space-y-4">
         {/* Title */}
-        <div className="h-6 bg-gray-300 rounded-lg w-3/4"></div>
+        <div className="h-6 bg-gray-300 dark:bg-slate-700 rounded-lg w-3/4"></div>
 
         {/* Description */}
         <div className="space-y-2">
-          <div className="h-4 bg-gray-200 rounded w-full"></div>
-          <div className="h-4 bg-gray-200 rounded w-5/6"></div>
+          <div className="h-4 bg-gray-200 dark:bg-slate-600 rounded w-full"></div>
+          <div className="h-4 bg-gray-200 dark:bg-slate-600 rounded w-5/6"></div>
         </div>
 
         {/* Meta Info */}
-        <div className="space-y-2 pt-2">
-          <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-          <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+        <div className="space-y-2 pt-3">
+          <div className="h-4 bg-gray-200 dark:bg-slate-600 rounded w-1/2"></div>
+          <div className="h-4 bg-gray-200 dark:bg-slate-600 rounded w-2/3"></div>
         </div>
 
         {/* Button */}
-        <div className="h-10 bg-gray-300 rounded-full mt-4"></div>
+        <div className="h-11 bg-gradient-to-r from-gray-300 to-gray-200 dark:from-slate-700 dark:to-slate-600 rounded-full mt-4"></div>
       </div>
     </div>
   );
@@ -56,48 +56,57 @@ export const HabitCard = ({ habit }) => {
   };
 
   return (
-    <div className="dark:bg-base-100 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col h-[420px]">
+    <div className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden flex flex-col h-[460px] shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-500/30">
       {/* Image Section */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-52 overflow-hidden bg-gradient-to-br from-slate-200 to-slate-100 dark:from-slate-700 dark:to-slate-600">
         <img
           src={image}
           alt={name}
-          className="w-full dark:opacity-50 h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          loading="lazy"
         />
+
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
         {/* Category Badge */}
-        <div className="absolute top-3 right-3">
-          <span className="inline-flex items-center gap-1 px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full text-xs font-semibold text-blue-600 shadow-md">
-            <Tag className="w-3 h-3" />
+        <div className="absolute top-4 right-4">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/95 dark:bg-slate-900/90 backdrop-blur-md rounded-full text-xs font-bold text-blue-600 dark:text-blue-400 shadow-lg hover:shadow-xl transform group-hover:scale-110 transition-all duration-300 border border-white/20 dark:border-blue-500/20">
+            <Tag className="w-3.5 h-3.5" />
             {category}
           </span>
         </div>
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-col flex-grow p-5">
+      <div className="flex flex-col flex-grow p-6 space-y-4">
         {/* Title */}
-        <h3 className="dark:text-gray-300 text-xl font-bold text-gray-900 mb-2 line-clamp-1">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
           {name}
         </h3>
 
         {/* Description */}
-        <p className="dark:text-gray-300 text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2 flex-grow">
+        <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-2 flex-grow">
           {truncateText(description)}
         </p>
 
         {/* Meta Information */}
-        <div className="space-y-2 mb-4 pb-4 border-b border-gray-100">
+        <div className="space-y-2 pb-4 border-t border-gray-100 dark:border-slate-700 pt-4">
           {/* Creator */}
-          <div className="flex items-center gap-2 text-sm">
-            <User className="w-4 h-4 text-gray-400" />
+          <div className="flex items-center gap-2.5 text-sm">
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            </div>
             <span className="text-gray-700 dark:text-gray-300 font-medium">
               {user_name || "Anonymous"}
             </span>
           </div>
 
           {/* Date */}
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar className="w-4 h-4 text-gray-400" />
+          <div className="flex items-center gap-2.5 text-sm">
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <Calendar className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+            </div>
             <span className="text-gray-600 dark:text-gray-300">
               {formatDate(createdAt)}
             </span>
@@ -105,8 +114,10 @@ export const HabitCard = ({ habit }) => {
 
           {/* Status Badge */}
           <div className="flex items-center gap-2">
-            <TrendingUp className="w-4 h-4 text-green-500" />
-            <span className="text-xs font-semibold text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
+            <div className="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-400" />
+            </div>
+            <span className="text-xs font-bold text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full">
               Active
             </span>
           </div>
@@ -115,9 +126,15 @@ export const HabitCard = ({ habit }) => {
         {/* View Details Button */}
         <Link
           to={`/habit-details/${_id}`}
-          className="btn w-full rounded-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white border-none shadow-md hover:shadow-lg transition-all duration-200 font-semibold text-sm h-11"
+          className="relative group/btn w-full rounded-xl py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 font-bold text-sm overflow-hidden"
         >
-          View Details →
+          <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
+          <span className="relative flex items-center justify-center gap-2">
+            View Details
+            <span className="group-hover/btn:translate-x-1 transition-transform duration-300">
+              →
+            </span>
+          </span>
         </Link>
       </div>
     </div>

@@ -87,9 +87,8 @@ const router = createBrowserRouter([
       {
         path: "habit-details/:id",
         element: (
-          <ProtectedRoute>
+         
             <HabitDetails />
-          </ProtectedRoute>
         ),
       },
     ],

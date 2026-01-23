@@ -17,6 +17,9 @@ const HabitDetails = () => {
   const [progress, setProgress] = useState(0);
   const [streak, setStreak] = useState(0);
 
+  // ✅ Check if current user is the owner
+  const isOwner = user?.email === habit?.created_by;
+
   useEffect(() => {
     if (location.state?.updated) {
       toast.success("Habit updated successfully!");
@@ -56,11 +59,11 @@ const HabitDetails = () => {
     const today = new Date();
 
     const last30 = historyDates.filter(
-      (d) => (today - d) / (1000 * 60 * 60 * 24) <= 30
+      (d) => (today - d) / (1000 * 60 * 60 * 24) <= 30,
     );
 
     const completedSet = new Set(
-      last30.map((d) => d.toISOString().split("T")[0])
+      last30.map((d) => d.toISOString().split("T")[0]),
     );
 
     setProgress(((completedSet.size / 30) * 100).toFixed(1));
@@ -81,13 +84,30 @@ const HabitDetails = () => {
   const handleMarkComplete = async () => {
     if (!habit) return;
 
+    // ✅ Check if user is logged in
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Login Required",
+        text: "Please login to mark habits as complete.",
+        showCancelButton: true,
+        confirmButtonText: "Go to Login",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location.pathname } });
+        }
+      });
+      return;
+    }
+
     const todayStr = new Date().toISOString().split("T")[0];
 
     if (habit.completionHistory?.includes(todayStr)) {
       Swal.fire({
         icon: "info",
         title: "Already Done!",
-        text: "You’ve already completed this habit today.",
+        text: "You've already completed this habit today.",
       });
       return;
     }
@@ -104,7 +124,7 @@ const HabitDetails = () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({ date: todayStr }),
-        }
+        },
       );
 
       const data = await res.json();
@@ -139,9 +159,19 @@ const HabitDetails = () => {
   const handleDelete = async () => {
     if (!habit) return;
 
+    // ✅ Check ownership before allowing delete
+    if (!isOwner) {
+      Swal.fire({
+        icon: "error",
+        title: "Permission Denied",
+        text: "You can only delete your own habits.",
+      });
+      return;
+    }
+
     const confirm = await Swal.fire({
       title: "Are you sure?",
-      text: "You won’t be able to revert this!",
+      text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -152,13 +182,16 @@ const HabitDetails = () => {
     if (confirm.isConfirmed) {
       try {
         const token = await user.getIdToken(true);
-        const res = await fetch(`VITE_API_URL/habits/${habit._id}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/habits/${habit._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         const data = await res.json();
 
@@ -189,105 +222,142 @@ const HabitDetails = () => {
 
   return (
     <MotionLayout>
-      <div className="max-w-5xl mx-auto p-4 md:p-6 lg:p-10">
-        <div
-          className="relative shadow-xl rounded-3xl overflow-hidden backdrop-blur-xl dark:bg-base-100"
-        >
-          <div className="absolute -top-10 -left-10 w-40 rounded-full bg-pink-300 opacity-20 blur-3xl"></div>
-          <div className="absolute -bottom-10 -right-10 w-40  rounded-full bg-blue-300 opacity-20 blur-3xl"></div>
+      <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+        <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-10">
+          <div className="relative rounded-3xl overflow-hidden bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/70 dark:border-slate-800/70 shadow-2xl">
+            <div className="absolute -top-20 -left-10 w-48 h-48 bg-blue-400/20 blur-3xl" />
+            <div className="absolute -bottom-24 -right-10 w-56 h-56 bg-purple-400/20 blur-3xl" />
 
-          <div className="flex flex-col md:flex-row gap-10 p-6 md:p-10">
-            <div className="md:w-1/2">
-              <img
-                src={habit.image}
-                alt={habit.name}
-                className="w-full object-cover rounded-2xl shadow-lg hover:scale-[1.02] transition-transform duration-300 dark:opacity-70"
-              />
-            </div>
-
-            <div className="flex flex-col justify-between w-full md:w-1/2 space-y-5">
-              <h1 className="text-3xl md:text-4xl font-semibold text-gray-800 dark:text-gray-400">
-                {habit.name}
-              </h1>
-
-              <div className="flex gap-3 flex-wrap">
-                <div className="px-4 py-1.5 bg-blue-500/80 text-white rounded-full font-medium shadow">
-                  {habit.category}
+            <div className="relative flex flex-col lg:flex-row gap-8 lg:gap-12 p-6 md:p-10">
+              <div className="lg:w-1/2 space-y-4">
+                <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-transparent to-purple-500/20" />
+                  <img
+                    src={habit.image}
+                    alt={habit.name}
+                    className="w-full object-cover rounded-2xl shadow-lg hover:scale-[1.02] transition-transform duration-300"
+                  />
                 </div>
+                <div className="flex gap-2 flex-wrap">
+                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 border border-blue-100 dark:border-blue-900/40">
+                    {habit.category}
+                  </span>
 
-                {streak >= 30 && (
-                  <div className="px-4 py-1.5 bg-yellow-500 text-white rounded-full font-semibold flex items-center gap-1 shadow">
-                    <Medal size={18} /> 30-Day Streak
-                  </div>
-                )}
-                {streak >= 7 && streak < 30 && (
-                  <div className="px-4 py-1.5 bg-orange-500 text-white rounded-full font-semibold flex items-center gap-1 shadow">
-                    <Flame size={18} /> Weekly Streak
-                  </div>
-                )}
-                {streak >= 1 && streak < 7 && (
-                  <div className="px-4 py-1.5 bg-green-500 text-white rounded-full font-semibold flex items-center gap-1 shadow">
-                    <Star size={18} /> Active Streak
-                  </div>
-                )}
-              </div>
-
-              <p className="text-gray-700 dark:text-gray-400">Description : {habit.description}</p>
-
-              <div className="space-y-3">
-                <div>
-                  <p className="font-semibold text-gray-800 mb-2 dark:text-green-500">
-                    Progress (Last 30 Days)
-                  </p>
-                  <progress
-                    className="progress progress-primary w-full rounded-full"
-                    value={progress}
-                    max="100"
-                  ></progress>
-                  <p className="text-sm mt-1 font-medium text-gray-600">
-                    {progress}% completed
-                  </p>
-                </div>
-
-                <div className="flex  items-center gap-2">
-                  <p className="font-semibold text-gray-800 dark:text-gray-400">
-                    Current Streak :
-                  </p>
-                  <div className="font-semibold ">
-                    {streak} day{streak !== 1 && "s"}
-                  </div>
+                  {streak >= 30 && (
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-100 border border-amber-100 dark:border-amber-900/40">
+                      <Medal size={18} /> 30-Day Streak
+                    </span>
+                  )}
+                  {streak >= 7 && streak < 30 && (
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-orange-50 text-orange-700 dark:bg-orange-900/30 dark:text-orange-100 border border-orange-100 dark:border-orange-900/40">
+                      <Flame size={18} /> Weekly Streak
+                    </span>
+                  )}
+                  {streak >= 1 && streak < 7 && (
+                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-100 border border-emerald-100 dark:border-emerald-900/40">
+                      <Star size={18} /> Active Streak
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-4">
-                <button
-                  onClick={handleMarkComplete}
-                  className="btn rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg border-none hover:opacity-90"
-                >
-                  Mark Complete
-                </button>
+              <div className="flex flex-col gap-6 lg:w-1/2">
+                <div className="space-y-3">
+                  <p className="text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-500">
+                    Habit
+                  </p>
+                  <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight">
+                    {habit.name}
+                  </h1>
+                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                    {habit.description}
+                  </p>
+                </div>
 
-                <Link
-                  to={`/update-habit/${habit._id}`}
-                  className="btn rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg border-none hover:opacity-90"
-                >
-                  Update Habit
-                </Link>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="p-4 rounded-2xl border border-slate-200/70 dark:border-slate-800/70 bg-white/80 dark:bg-slate-900/70 backdrop-blur">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">
+                      Progress (30 days)
+                    </p>
+                    <div className="flex items-end justify-between">
+                      <p className="text-3xl font-semibold text-blue-600 dark:text-blue-300">
+                        {progress}%
+                      </p>
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200 border border-blue-100 dark:border-blue-900/40">
+                        Auto-tracked
+                      </span>
+                    </div>
+                    <div className="mt-3 h-2 w-full rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-600 transition-all"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  </div>
 
-                <button
-                  onClick={handleDelete}
-                  className="btn rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg border-none hover:opacity-90"
-                >
-                  Delete
-                </button>
-              </div>
+                  <div className="p-4 rounded-2xl border border-slate-200/70 dark:border-slate-800/70 bg-white/80 dark:bg-slate-900/70 backdrop-blur flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Current streak
+                      </p>
+                      <p className="text-3xl font-semibold text-slate-900 dark:text-white">
+                        {streak} day{streak !== 1 && "s"}
+                      </p>
+                    </div>
+                    <div className="px-3 py-2 rounded-xl bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-200 border border-orange-100 dark:border-orange-900/40 font-semibold">
+                      🔥 Keep going
+                    </div>
+                  </div>
+                </div>
 
-              <div className="pt-5 space-y-2 border-t border-gray-300/50 text-sm text-gray-700 dark:text-gray-400">
-                <p>
-                  Created by :{" "}
-                  <span className="font-semibold">{habit.user_name}</span>
-                </p>
-                <p>Email : {habit.created_by}</p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={handleMarkComplete}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg shadow-emerald-500/20 hover:shadow-xl transition-all"
+                  >
+                    Mark Complete
+                  </button>
+
+                  {isOwner && (
+                    <>
+                      <Link
+                        to={`/update-habit/${habit._id}`}
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg shadow-blue-500/20 hover:shadow-xl transition-all"
+                      >
+                        Update Habit
+                      </Link>
+
+                      <button
+                        onClick={handleDelete}
+                        className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-white font-semibold bg-gradient-to-r from-red-500 to-rose-600 shadow-lg shadow-rose-500/20 hover:shadow-xl transition-all"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {user ? (
+                  <div className="pt-4 border-t border-slate-200/70 dark:border-slate-800/70 text-sm text-slate-600 dark:text-slate-400 space-y-1">
+                    <p>
+                      Created by{" "}
+                      <span className="font-semibold text-slate-900 dark:text-white">
+                        {habit.user_name}
+                      </span>
+                    </p>
+                    <p>{habit.created_by}</p>
+                  </div>
+                ) : (
+                  <div className="pt-4 border-t border-slate-200/70 dark:border-slate-800/70 text-sm text-slate-500 dark:text-slate-500 text-center">
+                    <Link
+                      to="/login"
+                      className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+                    >
+                      Login
+                    </Link>{" "}
+                    to see creator information
+                  </div>
+                )}
               </div>
             </div>
           </div>

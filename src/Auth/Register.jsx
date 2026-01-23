@@ -76,20 +76,20 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-      <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl flex overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center my-10">
+      <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl flex overflow-hidden dark:bg-base-300">
         {/* Left Image/Illustration */}
-        <div className="hidden md:flex w-1/2 bg-gradient-to-br from-blue-600 to-purple-600 items-center justify-center">
+        <div className="hidden md:flex w-1/2 items-center justify-center">
           <img
-            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80"
+            src="https://img.freepik.com/premium-vector/young-person-sits-healthy-foods-activities-customizing-their-daily-wellness-routine-healthy-habit-customizable-cartoon-illustration_538213-154090.jpg"
             alt="Login Illustration"
-            className="object-cover h-full w-full"
+            className="object-cover h-full w-full dark:opacity-60"
           />
         </div>
 
         {/* Form Section */}
         <div className="w-full md:w-1/2 p-10 md:p-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center dark:text-gray-400">
             Create Account
           </h2>
           <p className="text-center text-gray-600 mb-8">
@@ -99,7 +99,7 @@ const Register = () => {
           <form onSubmit={handleRegister} className="space-y-5">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-400">
                 Name
               </label>
               <input
@@ -107,13 +107,13 @@ const Register = () => {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full px-4 py-3 dark:text-gray-400 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-400">
                 Email
               </label>
               <input
@@ -121,26 +121,26 @@ const Register = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full dark:text-gray-400 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
             </div>
 
             {/* Photo URL */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-400">
                 Photo URL (optional)
               </label>
               <input
                 type="text"
                 value={photoURL}
                 onChange={(e) => setPhotoURL(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full dark:text-gray-400 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-gray-400">
                 Password
               </label>
               <input
@@ -149,7 +149,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters, uppercase & lowercase"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                className="w-full dark:text-gray-400 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
               />
             </div>
 

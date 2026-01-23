@@ -103,8 +103,8 @@ const MyHabits = ({ refresh }) => {
                 ...h,
                 completionHistory: [...(h.completionHistory || []), todayStr],
               }
-            : h
-        )
+            : h,
+        ),
       );
 
       toast.success("Great job! Keep it up! 🔥", { position: "top-center" });
@@ -161,141 +161,157 @@ const MyHabits = ({ refresh }) => {
 
   return (
     <MotionLayout>
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-              My Habits
-            </h1>
-            <p className="text-slate-600 dark:text-slate-400 mt-1">
-              {habits.length} active habits • Build consistency every day
-            </p>
-          </div>
-
-          <Link
-            to="/dashboard/add-habit"
-            className="btn bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white gap-2 shadow-lg shadow-indigo-500/20 hover:shadow-xl transition-all"
-          >
-            <FaPlus size={16} /> New Habit
-          </Link>
-        </div>
-
-        {habits.length === 0 ? (
-          <div className="card bg-base-100 shadow-xl border border-base-200 text-center py-16 px-6">
-            <div className="max-w-md mx-auto">
-              <div className="text-6xl mb-6 opacity-50">🌱</div>
-              <h3 className="text-2xl font-bold mb-3">No habits yet</h3>
-              <p className="text-slate-500 mb-8">
-                Start your journey to better habits today!
+      <div className="min-h-full bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-10">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <div className="space-y-2">
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-500">
+                Dashboard
               </p>
-              <Link
-                to="/add-habit"
-                className="btn btn-lg bg-indigo-600 hover:bg-indigo-700 text-white gap-2"
-              >
-                <FaPlus /> Create First Habit
-              </Link>
+              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                My Habits
+              </h1>
+              <div className="flex flex-wrap gap-2 text-sm text-slate-600 dark:text-slate-400">
+                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 dark:border-slate-800/70 bg-white/70 dark:bg-slate-900/70 px-3 py-1 backdrop-blur">
+                  <FaFire className="text-orange-500" />
+                  {habits.length} active habits
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200/80 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200 px-3 py-1">
+                  <FaCheckCircle className="text-emerald-500" />
+                  Stay consistent daily
+                </span>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="overflow-x-auto rounded-xl border border-base-300 bg-base-100 shadow-xl">
-            <table className="table table-lg w-full">
-              <thead className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900">
-                <tr className="text-base font-semibold text-indigo-800 dark:text-indigo-300">
-                  <th className="w-5/12">Habit</th>
-                  <th className="w-2/12 text-center">Category</th>
-                  <th className="w-1/12 text-center">Streak</th>
-                  <th className="w-2/12 text-center">Created</th>
-                  <th className="w-3/12 text-right pr-6">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {habits.map((habit) => {
-                  const streak = calculateCurrentStreak(
-                    habit.completionHistory
-                  );
-                  const completedToday = isCompletedToday(
-                    habit.completionHistory
-                  );
 
-                  return (
-                    <tr
-                      key={habit._id}
-                      className="hover:bg-base-200/60 transition-colors border-b border-base-200 last:border-b-0"
-                    >
-                      <td className="font-medium">
-                        <div className="flex flex-col gap-1">
-                          <div className="text-lg font-semibold">
-                            {habit.name}
-                          </div>
-                          {habit.description && (
-                            <div className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
-                              {habit.description}
-                            </div>
-                          )}
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <div className="badge badge-outline badge-secondary badge-lg">
-                          {habit.category}
-                        </div>
-                      </td>
-                      <td className="text-center">
-                        <div
-                          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-sm ${
-                            streak > 0
-                              ? "bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-sm"
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
-                          }`}
-                        >
-                          <FaFire
-                            className={
-                              streak > 0 ? "text-white" : "text-slate-400"
-                            }
-                          />
-                          {streak}
-                        </div>
-                      </td>
-                      <td className="text-center text-slate-600 dark:text-slate-400">
-                        <div className="flex items-center justify-center gap-2">
-                          <FaCalendarAlt className="text-indigo-500" />
-                          {new Date(habit.created_at).toLocaleDateString()}
-                        </div>
-                      </td>
-                      <td className="text-right pr-6">
-                        <div className="flex items-center justify-end gap-2">
-                          {completedToday ? (
-                            <div className="btn btn-sm btn-outline btn-success gap-1.5">
-                              <FaCheckCircle /> Completed
-                            </div>
-                          ) : (
-                            <button
-                              onClick={() => handleMarkComplete(habit)}
-                              className="btn btn-sm btn-outline btn-success gap-1.5 hover:bg-success hover:text-white transition-colors"
-                            >
-                              <FaCheckCircle /> Complete
-                            </button>
-                          )}
-                          <Link
-                            to={`/dashboard/update-habit/${habit._id}`}
-                            className="btn btn-sm btn-outline btn-info gap-1.5"
-                          >
-                            <FaEdit /> Edit
-                          </Link>
-                          <button
-                            onClick={() => handleDelete(habit._id)}
-                            className="btn btn-sm btn-outline btn-error gap-1.5"
-                          >
-                            <FaTrashAlt /> Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <Link
+              to="/dashboard/add-habit"
+              className="inline-flex items-center gap-2 rounded-xl px-4 py-3 text-white font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 shadow-lg shadow-blue-500/20 hover:shadow-xl transition-all hover:-translate-y-0.5"
+            >
+              <FaPlus size={16} /> New Habit
+            </Link>
           </div>
-        )}
+
+          {habits.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/70 backdrop-blur-xl shadow-sm text-center py-16 px-6">
+              <div className="max-w-md mx-auto space-y-4">
+                <div className="text-6xl mb-2">🌱</div>
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                  No habits yet
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Start your journey to better habits today!
+                </p>
+                <Link
+                  to="/dashboard/add-habit"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/20 hover:shadow-xl transition-all"
+                >
+                  <FaPlus /> Create First Habit
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <div className="overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl shadow-xl">
+              <div className="overflow-x-auto">
+                <table className="table table-lg w-full">
+                  <thead className="bg-gradient-to-r from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-900/80 dark:to-purple-950/40">
+                    <tr className="text-sm sm:text-base font-semibold text-blue-900 dark:text-blue-100">
+                      <th className="w-5/12">Habit</th>
+                      <th className="w-2/12 text-center">Category</th>
+                      <th className="w-1/12 text-center">Streak</th>
+                      <th className="w-2/12 text-center">Created</th>
+                      <th className="w-3/12 text-right pr-6">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {habits.map((habit) => {
+                      const streak = calculateCurrentStreak(
+                        habit.completionHistory,
+                      );
+                      const completedToday = isCompletedToday(
+                        habit.completionHistory,
+                      );
+
+                      return (
+                        <tr
+                          key={habit._id}
+                          className="border-b border-slate-100 dark:border-slate-800/80 last:border-b-0 hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors"
+                        >
+                          <td className="font-medium">
+                            <div className="flex flex-col gap-1">
+                              <div className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">
+                                {habit.name}
+                              </div>
+                              {habit.description && (
+                                <div className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
+                                  {habit.description}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="text-center">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 px-3 py-1 text-sm bg-white/80 dark:bg-slate-900/70 text-slate-700 dark:text-slate-300">
+                              {habit.category}
+                            </div>
+                          </td>
+                          <td className="text-center">
+                            <div
+                              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold text-sm ${
+                                streak > 0
+                                  ? "bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-sm"
+                                  : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+                              }`}
+                            >
+                              <FaFire
+                                className={
+                                  streak > 0 ? "text-white" : "text-slate-400"
+                                }
+                              />
+                              {streak}
+                            </div>
+                          </td>
+                          <td className="text-center text-slate-600 dark:text-slate-400">
+                            <div className="flex items-center justify-center gap-2">
+                              <FaCalendarAlt className="text-indigo-500" />
+                              {new Date(habit.created_at).toLocaleDateString()}
+                            </div>
+                          </td>
+                          <td className="text-right pr-6">
+                            <div className="flex items-center justify-end gap-2 flex-nowrap overflow-x-auto whitespace-nowrap pb-2">
+                              {completedToday ? (
+                                <div className="btn btn-sm btn-outline btn-success gap-1.5 inline-flex items-center">
+                                  <FaCheckCircle /> Completed
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => handleMarkComplete(habit)}
+                                  className="btn btn-sm btn-outline btn-success gap-1.5 inline-flex items-center hover:bg-success hover:text-white transition-colors"
+                                >
+                                  <FaCheckCircle /> Complete
+                                </button>
+                              )}
+                              <Link
+                                to={`/dashboard/update-habit/${habit._id}`}
+                                className="btn btn-sm btn-outline btn-info gap-1.5 inline-flex items-center"
+                              >
+                                <FaEdit /> Edit
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(habit._id)}
+                                className="btn btn-sm btn-outline btn-error gap-1.5 inline-flex items-center"
+                              >
+                                <FaTrashAlt /> Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </MotionLayout>
   );
